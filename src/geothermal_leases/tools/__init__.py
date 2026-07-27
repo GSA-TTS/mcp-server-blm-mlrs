@@ -7,10 +7,12 @@ allowing searches, summaries, and analysis of geothermal leases information.
 
 from . import (
     get_lease_details,
+    search_leases,
 )
 
 
 def register_tools(mcp):
     """Register all tools with the MCP server."""
     get_lease_details.register(mcp)
+    search_leases.register(mcp)
     

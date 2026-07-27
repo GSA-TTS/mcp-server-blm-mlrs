@@ -1,20 +1,6 @@
-from datetime import datetime, timezone
-import httpx  
+import httpx
 
-BASE_URL = (
-    "https://gis.blm.gov/nlsdb/rest/services/HUB"
-    "/BLM_Natl_MLRS_Geothermal_Leases/FeatureServer/0/query"
-)
-
-
-def _ts_to_date(ms: int | None) -> str | None:
-    """Convert ArcGIS epoch-milliseconds to an ISO date string."""
-    if ms is None:
-        return None
-    # BLM uses very large values (year 2999+) to mean "no expiration"
-    if ms > 32_503_593_600_000:
-        return "No expiration"
-    return datetime.fromtimestamp(ms / 1000, tz=timezone.utc).strftime("%Y-%m-%d")
+from ._blm import BASE_URL, ts_to_date as _ts_to_date
 
 
 def register(mcp):
